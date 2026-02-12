@@ -1,13 +1,11 @@
 pipeline {
     agent any
 
-    environment {
-        COMPOSE_FILE = 'sh docker-compose.yml'
-    }
-
     stages {
+
         stage('Checkout') {
             steps {
+                echo 'Checking out source code...'
                 checkout scm
             }
         }
@@ -15,21 +13,21 @@ pipeline {
         stage('Build Docker Images') {
             steps {
                 echo 'Building Docker images...'
-                sh 'docker-compose build'
+                sh 'docker compose build'
             }
         }
 
         stage('Start Services') {
             steps {
-                echo 'Starting Docker containers...'
-                sh 'docker-compose up -d'
+                echo 'Starting services using Docker Compose...'
+                sh 'docker compose up -d'
             }
         }
 
         stage('Tests') {
             steps {
                 echo 'Running tests...'
-                // Add test commands if you have any, e.g., API tests
+                // Add your test commands here if needed
             }
         }
     }
@@ -37,7 +35,8 @@ pipeline {
     post {
         always {
             echo 'Cleaning up Docker containers...'
-            sh 'docker-compose down'
+            sh 'docker compose down'
         }
     }
 }
+
