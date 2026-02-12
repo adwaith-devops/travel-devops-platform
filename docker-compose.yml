@@ -1,0 +1,19 @@
+version: "3"
+
+services:
+
+  webui:
+    build: ./webui
+    ports:
+      - "3000:3000"
+
+  appui:
+    build: ./appui
+    ports:
+      - "4000:4000"
+
+  backend:
+    build: ./backend
+    ports:
+      - "8080:8080"
+
